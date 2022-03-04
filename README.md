@@ -17,12 +17,14 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+Ivan Voinov:
 [![LinkedIn][linkedin-shield]][linkedin-url]
+Jacob Adams:
+[![LinkedIn][linkedin-shield]][linkedin-url2]
+Xutao Liu
+[![LinkedIn][linkedin-shield]][linkedin-url3]
+Danila Rozhevskii
+[![LinkedIn][linkedin-shield]][linkedin-url4]
 
 
 
@@ -227,5 +229,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/ivan-voinov-784a1b18b/
+[linkedin-url2]: https://www.linkedin.com/in/ivan-voinov-784a1b18b/
+[linkedin-url3]: https://www.linkedin.com/in/ivan-voinov-784a1b18b/
+[linkedin-url4]: https://www.linkedin.com/in/danila-rozhevskii-a0b2b7196/
 [product-screenshot]: images/screenshot.png
 
