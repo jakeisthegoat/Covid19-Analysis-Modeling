@@ -17,7 +17,7 @@ url = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Model
 df1 = pd.read_csv(url)
 
 #Actual Daily Cases for PA
-url2 = 'https://raw.githubusercontent.com/drozhevskii/DS-440-SP2022-COVID-Predictions/main/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv'
+url2 = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv'
 df2 = pd.read_csv(url2)
 
 #check types of data frames
