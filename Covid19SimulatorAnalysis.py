@@ -13,7 +13,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 #COVID-19 Simulator Predictions for PA
-url = 'https://raw.githubusercontent.com/drozhevskii/DS-440-SP2022-COVID-Predictions/main/dataFile_new_diag_cases_State-level.csv'
+url = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/dataFile_new_diag_cases_State-level.csv'
 df1 = pd.read_csv(url)
 
 #Actual Daily Cases for PA
