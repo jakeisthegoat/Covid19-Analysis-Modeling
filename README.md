@@ -198,9 +198,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Ivan Voinov - email: ivv5032@psu.edu
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/IvanVoinovGitHub/Covid19-Analysis-Modeling)
+Project Link: [https://github.com/IvanVoinovGitHub/Covid19-Analysis-Modeling](https://github.com/IvanVoinovGitHub/Covid19-Analysis-Modeling)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
