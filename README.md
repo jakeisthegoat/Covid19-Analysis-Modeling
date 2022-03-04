@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="Images/CovidLogo.jpg" alt="Logo" width="445" height="270">
+    <img src="Images/CovidLogo.jpg" alt="Logo" width="470" height="270">
   </a>
 
 <h3 align="center">Enhanced Covid-19 Predictive Modeling</h3>
