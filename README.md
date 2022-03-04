@@ -17,18 +17,17 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-Ivan Voinov:
 [![LinkedIn][linkedin-shield]][linkedin-url]
+Ivan Voinov
 
-Jacob Adams:
 [![LinkedIn][linkedin-shield]][linkedin-url2]
+Jacob Adams
 
-Xutao Liu:
 [![LinkedIn][linkedin-shield]][linkedin-url3]
+Xutao Liu
 
-Danila Rozhevskii:
 [![LinkedIn][linkedin-shield]][linkedin-url4]
-
+Danila Rozhevskii
 
 
 <!-- PROJECT LOGO -->
