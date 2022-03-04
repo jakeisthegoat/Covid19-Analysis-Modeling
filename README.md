@@ -19,11 +19,14 @@
 -->
 Ivan Voinov:
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
 Jacob Adams:
 [![LinkedIn][linkedin-shield]][linkedin-url2]
-Xutao Liu
+
+Xutao Liu:
 [![LinkedIn][linkedin-shield]][linkedin-url3]
-Danila Rozhevskii
+
+Danila Rozhevskii:
 [![LinkedIn][linkedin-shield]][linkedin-url4]
 
 
