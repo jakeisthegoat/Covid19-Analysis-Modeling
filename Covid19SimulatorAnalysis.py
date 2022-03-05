@@ -282,8 +282,10 @@ plt.show()
 overallAccuracy = merged_inner['Accuracy'].mean()
 print(overallAccuracy)
 
+#Create new dataframe for year 2022
 data_2022 = merged_inner[(merged_inner['Date'] > '2022-01-01')]
 
+#create error and accuracy lists for 2022
 error_2022=[]
 for index, row in data_2022.iterrows():
   error_2022.append((abs(row['New Cases'] - row["reportedValues"])) / row['New Cases'])
@@ -292,8 +294,10 @@ accuracy_2022 = []
 for i in error_2022:
   accuracy_2022.append(1 - i)
 
+#check head of 2022 data
 data_2022.head(5)
 
+#create plot for 2022 accuracy
 plt.xlabel('Date (Month/Day)') 
 plt.ylabel('Prediction Accuracy') 
 plt.title("Accuracy Estimation for 2022 PA (Covid-19 Simulator)")
