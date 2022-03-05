@@ -10,14 +10,15 @@ Original file is located at
 #import libraries
 import csv
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 #COVID-19 Simulator Predictions for PA
-url = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/Data/dataFile_new_diag_cases_State-level.csv'
+url = 'https://raw.githubusercontent.com/drozhevskii/DS-440-SP2022-COVID-Predictions/main/dataFile_new_diag_cases_State-level.csv'
 df1 = pd.read_csv(url)
 
 #Actual Daily Cases for PA
-url2 = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/Data/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv'
+url2 = 'https://raw.githubusercontent.com/drozhevskii/DS-440-SP2022-COVID-Predictions/main/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv'
 df2 = pd.read_csv(url2)
 
 #check types of data frames
@@ -277,3 +278,22 @@ plt.show()
 #Calculate Overall Accuracy
 overallAccuracy = merged_inner['Accuracy'].mean()
 print(overallAccuracy)
+
+data_2022 = merged_inner[(merged_inner['Date'] > '2022-01-01')]
+
+error_2022=[]
+for index, row in data_2022.iterrows():
+  error_2022.append((abs(row['New Cases'] - row["reportedValues"])) / row['New Cases'])
+
+accuracy_2022 = []
+for i in error_2022:
+  accuracy_2022.append(1 - i)
+
+data_2022.head(5)
+
+plt.xlabel('Date (Month/Day)') 
+plt.ylabel('Prediction Accuracy') 
+plt.title("Accuracy Estimation for 2022 PA (Covid-19 Simulator)")
+
+plt.plot(data_2022['Date'].dt.strftime('%m-%d'), accuracy_2022, label='Accuracy 2022')
+plt.xticks(np.arange(0, len(data_2022['Date']), 7))
