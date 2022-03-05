@@ -10,8 +10,11 @@ Original file is located at
 #import libraries
 import csv
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+import math
+import numpy as np
+import statistics
+
 
 #COVID-19 Simulator Predictions for PA
 url = 'https://raw.githubusercontent.com/drozhevskii/DS-440-SP2022-COVID-Predictions/main/dataFile_new_diag_cases_State-level.csv'
@@ -297,3 +300,17 @@ plt.title("Accuracy Estimation for 2022 PA (Covid-19 Simulator)")
 
 plt.plot(data_2022['Date'].dt.strftime('%m-%d'), accuracy_2022, label='Accuracy 2022')
 plt.xticks(np.arange(0, len(data_2022['Date']), 7))
+
+#cleans accuracy list of all nan values
+newlist = [x for x in accuracy if math.isnan(x) == False]
+print(newlist)
+
+#calculate variance and st deviation of accuracy
+var = sum((l-overallAccuracy)**2 for l in newlist) / len(newlist)
+st_dev = math.sqrt(var)
+print(var)
+print(st_dev)
+
+#calculate median of accuracy
+accMedian = statistics.median(newlist)
+print(accMedian)
