@@ -17,7 +17,7 @@ import statistics
 
 
 #COVID-19 Simulator Predictions for PA
-url = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/Data/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv'
+url = 'https://raw.githubusercontent.com/IvanVoinovGitHub/Covid19-Analysis-Modeling/main/Data/dataFile_new_diag_cases_State-level.csv'
 df1 = pd.read_csv(url)
 
 #Actual Daily Cases for PA
