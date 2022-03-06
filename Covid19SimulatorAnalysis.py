@@ -174,6 +174,51 @@ plt.title("Predicted Daily COVID-19 Case Weekly Accuracy in PA (Covid-19 Simulat
 plt.legend()
 plt.show()
 
+#Create Running Weekly Average
+runningweeklyAccuracy = 0
+runningAverageWeeklyAccuracy = []
+length = len(accuracy)
+
+i = 1
+j = 8
+#Add first week average
+runningAverageWeeklyAccuracy.append(averageWeeklyAccuracy[0])
+
+while j < length:
+  temp_i = i
+  temp_j = j
+  while temp_i < temp_j:
+    runningweeklyAccuracy += accuracy[temp_i]
+    temp_i += 1
+  runningAverageWeeklyAccuracy.append(runningweeklyAccuracy / 7)
+  runningweeklyAccuracy = 0
+
+  i += 1
+  j += 1
+
+#Create Dataframe for Running Weekly Accuracy
+i = 0
+data = []
+while i < len(runningAverageWeeklyAccuracy):
+  data.append([merged_inner['Date'][i], runningAverageWeeklyAccuracy[i]])
+  i += 1
+
+df = pd.DataFrame(data, columns = ['Date', 'Running Weekly Average Accuracy'])
+
+#Create plot of Running Weekly Accuracy
+
+#Accuracy Line
+plt.plot(df['Date'], df['Running Weekly Average Accuracy'], color='r', label='Running Weekly Accuracy')
+
+#Create XY Labels and Title
+plt.xlabel('Date') 
+plt.ylabel('Accuracy Percentage') 
+plt.title("Predicted Daily COVID-19 Case Running Weekly Accuracy in PA (Covid-19 Simulator)")
+
+#Display Plot
+plt.legend()
+plt.show()
+
 #Calculate Monthly Accuracy Averages
 #We are going to use an average of 30 days per month for these calculations
 
