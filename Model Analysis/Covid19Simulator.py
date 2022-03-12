@@ -114,6 +114,23 @@ plt.title("Predicted Daily COVID-19 Case Error in PA (Covid-19 Simulator)")
 plt.legend()
 plt.show()
 
+#Create plot of Raw Error
+
+#Raw Error Line
+plt.plot(merged_inner['Date'], merged_inner['RawError'], color='g', label='Raw Error')
+plt.axhline(y=0.0, color='r', linestyle='-')
+
+#Create XY Labels and Title
+plt.xlabel('Date (Year/Month/Day)') 
+plt.ylabel('Percentage') 
+plt.title("Predicted Daily COVID-19 Case Raw Error in PA (Covid-19 Simulator)")
+#Display Plot
+plt.legend()
+plt.show()
+
+
+
+
 #Create plot of Accuracy
 
 #Accuracy Line
