@@ -219,6 +219,23 @@ plt.title("Predicted Daily COVID-19 Case Running Weekly Accuracy in PA (Covid-19
 plt.legend()
 plt.show()
 
+#Plot with combined daily accuracy and running weekly accuracy
+
+#Daily Accuracy
+plt.plot(merged_inner['Date'], merged_inner['Accuracy'], color='r', label='Daily Accuracy')
+
+#Running Accuracy Line
+plt.plot(df['Date'], df['Running Weekly Average Accuracy'], color='b', label='Running Weekly Accuracy')
+
+#Create XY Labels and Title
+plt.xlabel('Date') 
+plt.ylabel('Accuracy Percentage') 
+plt.title("Predicted Daily COVID-19 Case Accuracy in PA (Covid-19 Simulator)")
+
+#Display Plot
+plt.legend()
+plt.show()
+
 #Calculate Monthly Accuracy Averages
 #We are going to use an average of 30 days per month for these calculations
 
