@@ -75,31 +75,11 @@ merged_inner['reportedValues'][7]
 #confirmed = merged_inner['New Cases']
 #projected = merged_inner["reportedValues"]
 error = []
-rawerror = []
 
 for index, row in merged_inner.iterrows():
-  rawerror.append(-1*(row['New Cases'] - row["reportedValues"]) / row['New Cases'])
   error.append((abs(row['New Cases'] - row["reportedValues"])) / row['New Cases'])
-    
-underpredictCount = 0
-overpredictCount = 0
-for x in rawerror:
-  if x < 0:
-    underpredictCount += 1
-  elif x > 0:
-    overpredictCount += 1
-
-underpredictPerecentage = underpredictCount / len(rawerror)
-overpredictPercentage = 1 - underpredictPerecentage
-
-print(underpredictCount)
-print(underpredictPerecentage)
-print(overpredictCount)
-print(overpredictPercentage)
-print(len(error))
 
 print(error)
-print(rawerror)
 
 #accuracy calculations
 accuracy = []
@@ -112,7 +92,6 @@ print(accuracy)
 #Create Error and Accuracy Column and insert list data
 merged_inner['Error'] = error
 merged_inner['Accuracy'] = accuracy
-merged_inner['RawError'] = rawerror
 
 print(merged_inner)
 
@@ -130,23 +109,6 @@ plt.title("Predicted Daily COVID-19 Case Error in PA (Covid-19 Simulator)")
 #Display Plot
 plt.legend()
 plt.show()
-
-#Create plot of Raw Error
-
-#Raw Error Line
-plt.plot(merged_inner['Date'], merged_inner['RawError'], color='g', label='Raw Error')
-plt.axhline(y=0.0, color='r', linestyle='-')
-
-#Create XY Labels and Title
-plt.xlabel('Date (Year/Month/Day)') 
-plt.ylabel('Percentage') 
-plt.title("Predicted Daily COVID-19 Case Raw Error in PA (Covid-19 Simulator)")
-#Display Plot
-plt.legend()
-plt.show()
-
-
-
 
 #Create plot of Accuracy
 
@@ -252,23 +214,6 @@ plt.plot(df['Date'], df['Running Weekly Average Accuracy'], color='r', label='Ru
 plt.xlabel('Date') 
 plt.ylabel('Accuracy Percentage') 
 plt.title("Predicted Daily COVID-19 Case Running Weekly Accuracy in PA (Covid-19 Simulator)")
-
-#Display Plot
-plt.legend()
-plt.show()
-
-#Plot with combined daily accuracy and running weekly accuracy
-
-#Daily Accuracy
-plt.plot(merged_inner['Date'], merged_inner['Accuracy'], color='r', label='Daily Accuracy')
-
-#Running Accuracy Line
-plt.plot(df['Date'], df['Running Weekly Average Accuracy'], color='b', label='Running Weekly Accuracy')
-
-#Create XY Labels and Title
-plt.xlabel('Date') 
-plt.ylabel('Accuracy Percentage') 
-plt.title("Predicted Daily COVID-19 Case Accuracy in PA (Covid-19 Simulator)")
 
 #Display Plot
 plt.legend()
