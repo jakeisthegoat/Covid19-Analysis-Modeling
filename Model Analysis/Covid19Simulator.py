@@ -80,6 +80,23 @@ rawerror = []
 for index, row in merged_inner.iterrows():
   rawerror.append(-1*(row['New Cases'] - row["reportedValues"]) / row['New Cases'])
   error.append((abs(row['New Cases'] - row["reportedValues"])) / row['New Cases'])
+    
+underpredictCount = 0
+overpredictCount = 0
+for x in rawerror:
+  if x < 0:
+    underpredictCount += 1
+  elif x > 0:
+    overpredictCount += 1
+
+underpredictPerecentage = underpredictCount / len(rawerror)
+overpredictPercentage = 1 - underpredictPerecentage
+
+print(underpredictCount)
+print(underpredictPerecentage)
+print(overpredictCount)
+print(overpredictPercentage)
+print(len(error))
 
 print(error)
 print(rawerror)
