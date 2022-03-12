@@ -75,11 +75,14 @@ merged_inner['reportedValues'][7]
 #confirmed = merged_inner['New Cases']
 #projected = merged_inner["reportedValues"]
 error = []
+rawerror = []
 
 for index, row in merged_inner.iterrows():
+  rawerror.append(-1*(row['New Cases'] - row["reportedValues"]) / row['New Cases'])
   error.append((abs(row['New Cases'] - row["reportedValues"])) / row['New Cases'])
 
 print(error)
+print(rawerror)
 
 #accuracy calculations
 accuracy = []
@@ -92,6 +95,7 @@ print(accuracy)
 #Create Error and Accuracy Column and insert list data
 merged_inner['Error'] = error
 merged_inner['Accuracy'] = accuracy
+merged_inner['RawError'] = rawerror
 
 print(merged_inner)
 
