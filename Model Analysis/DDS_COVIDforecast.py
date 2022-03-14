@@ -97,48 +97,96 @@ df_weekly.dtypes
 df1_groupedbydate.dtypes
 
 
-# In[13]:
-
-
-merged_inner = pd.merge(left=df1_groupedbydate[['Cumulative cases                          ']], right=df_weekly, left_on='Date', right_on='Date')
-merged_inner
-
-
-# In[ ]:
-
-
-print(df1_groupedbydate)
-
-
 # In[ ]:
 
 
 #creating a column for daily additions
 df_weekly["dayRate"] = df_weekly["value"] / 7
+df_weekly
 
 
 # In[ ]:
 
 
-#Merge Datasets on Data attribute
-merged_weekly = pd.merge(left=df_weekly, right=df1_groupedbydate, left_on='target_end_date', right_on='Date')
+merged_weekly = pd.merge(left=df1_groupedbydate[['Cumulative cases                          ']], right=df_weekly, left_on='Date', right_on='Date')
+merged_weekly.rename(columns={'Cumulative cases                          ':'Cumulative cases'}, inplace=True)
 merged_weekly
 
 
 # In[ ]:
 
 
-#creating a column for daily additions
-df_weekly["dayRate"] = df_weekly["Cumulative cases"] * 1.882
+merged_weekly.shape
 
 
-# In[15]:
+# In[ ]:
+
+
+#select all the dates to be merged with prediction table
+mask = (df1['Date'] > '2020-08-01') & (df1['Date'] <= '2021-04-03')
+df1_copy = df1.loc[mask]
+df1_copy = df1_copy.groupby(["Date"]).sum()
+df1_copy.rename(columns={'Cumulative cases                          ':'Cumulative cases'}, inplace=True)
+df1_copy
+
+
+# In[ ]:
+
+
+merged_df = df1_copy[['Cumulative cases']].merge(df_weekly, how='left', left_on = 'Date', right_on = 'Date')
+merged_df.head(10)
+
+
+# In[ ]:
+
+
+#generate the rest of the rows to fill in between bi-weekly data 
+merged_df_new = merged_df
+for i, row in merged_df.iterrows():
+    for _ in range(6):
+        merged_df_new.at[i,'location']="42"
+
+
+# In[ ]:
+
+
+merged_df_new = merged_df_new.fillna(method='bfill')
+merged_df_new.head(20)
+
+
+# In[ ]:
+
+
+merged_df_new.shape
+
+
+# In[ ]:
+
+
+merged_df_new = pd.merge(merged_df_new, merged_weekly, on='Date', how='left')
+merged_df_new.drop(['forecast_date_y', 'location_y', 
+                'target_y', 'type_y','quantile_y','value_y','dayRate_y'], axis=1, inplace=True)
+
+
+# In[ ]:
+
+
+merged_df_new.rename(columns={'Cumulative cases_x':'Cumulative cases', 'forecast_date_x':'forecast_date',
+                             'location_x':'location','target_x':'target','type_x':'type',
+                             'quantile_x':'quantile','value_x':'value','dayRate_x':'dayRate'}, inplace=True)
+merged_df_new.head(20)
+
+
+# In[ ]:
 
 
 merged_inner.to_csv('DDS_weekly_predictions.csv')
 
 
 # In[ ]:
+
+
+merged_df_new.dtypes
 
 
 
