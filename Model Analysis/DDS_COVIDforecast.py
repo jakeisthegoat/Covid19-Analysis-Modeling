@@ -150,37 +150,267 @@ for i, row in merged_df.iterrows():
 # In[ ]:
 
 
+#fill out all weekly the empty dayRate rows with the same average dayRate
 merged_df_new = merged_df_new.fillna(method='bfill')
 merged_df_new.head(20)
 
 
-# In[ ]:
+# In[19]:
 
 
 merged_df_new.shape
 
 
-# In[ ]:
+# In[20]:
 
 
+#merging actual cases and predcited by week
 merged_df_new = pd.merge(merged_df_new, merged_weekly, on='Date', how='left')
 merged_df_new.drop(['forecast_date_y', 'location_y', 
                 'target_y', 'type_y','quantile_y','value_y','dayRate_y'], axis=1, inplace=True)
 
 
-# In[ ]:
+# In[21]:
 
 
 merged_df_new.rename(columns={'Cumulative cases_x':'Cumulative cases', 'forecast_date_x':'forecast_date',
                              'location_x':'location','target_x':'target','type_x':'type',
                              'quantile_x':'quantile','value_x':'value','dayRate_x':'dayRate'}, inplace=True)
-merged_df_new.head(20)
+merged_df_new.head(40)
+
+
+# In[22]:
+
+
+merged_df_new.shape
+
+
+# In[23]:
+
+
+merged_df_new.dtypes
+
+
+# In[43]:
+
+
+#filling out all the days of the week with predicted values from the model
+for i in range(6, 245, 7):
+    merged_df_new2.at[i-1,'Cumulative cases_y']=merged_df_new2.at[i,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+    merged_df_new2.at[i-2,'Cumulative cases_y']=merged_df_new2.at[i-1,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+    merged_df_new2.at[i-3,'Cumulative cases_y']=merged_df_new2.at[i-2,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+    merged_df_new2.at[i-4,'Cumulative cases_y']=merged_df_new2.at[i-3,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+    merged_df_new2.at[i-5,'Cumulative cases_y']=merged_df_new2.at[i-4,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+    merged_df_new2.at[i-6,'Cumulative cases_y']=merged_df_new2.at[i-5,'Cumulative cases_y'] - merged_df_new2.at[i,'dayRate']
+
+
+# In[58]:
+
+
+#filling missing values
+merged_df_new2['Cumulative cases_y'] = merged_df_new2['Cumulative cases_y'].fillna(method='ffill')
+
+
+# In[47]:
+
+
+merged_df_new2.tail(10)
+
+
+# In[61]:
+
+
+#renaming columns for predcited and actual cases
+merged_df_new2.rename(columns={'Cumulative cases':'Actual', 'Cumulative cases_y':'Prediction'}, inplace=True)
+merged_df_new2.head(10)
+
+
+# In[63]:
+
+
+#Create plot of Actual vs. Predicted Cases
+
+#Actual Cases Line
+plt.plot(merged_df_new2['Date'], merged_df_new2['Actual'], color='g', label='Actual Cases')
+
+#Predicted Cases Line
+plt.plot(merged_df_new2['Date'], merged_df_new2['Prediction'], color='r', label='Predicted Cases')
+
+#Create XY Labels and Title
+plt.xlabel('Date (Year/Month/Day)') 
+plt.ylabel('Number of Cases') 
+plt.title("Predicted Daily Cases vs Actual Cases in PA")
+
+#Display Plot
+plt.legend()
+plt.show()
+
+
+# In[64]:
+
+
+#error calculations
+#confirmed = merged_df_new2['Actual']
+#projected = merged_df_new2['Prediction']
+error = []
+rawerror = []
+
+for index, row in merged_df_new2.iterrows():
+  rawerror.append(-1*(row['Actual'] - row["Prediction"]) / row['Actual'])
+  error.append((abs(row['Actual'] - row["Prediction"])) / row['Actual'])
+
+underpredictCount = 0
+overpredictCount = 0
+for x in rawerror:
+  if x < 0:
+    underpredictCount += 1
+  elif x > 0:
+    overpredictCount += 1
+
+underpredictPerecentage = underpredictCount / len(rawerror)
+overpredictPercentage = 1 - underpredictPerecentage
+
+print(underpredictCount)
+print(underpredictPerecentage)
+print(overpredictCount)
+print(overpredictPercentage)
+print(len(error))
+
+print(error)
+print(rawerror)
+
+
+# In[65]:
+
+
+#accuracy calculations
+accuracy = []
+
+for i in error:
+  accuracy.append(1 - i)
+
+print(accuracy)
+
+
+# In[66]:
+
+
+#Create Error and Accuracy Column and insert list data
+merged_df_new2['Error'] = error
+merged_df_new2['Accuracy'] = accuracy
+merged_df_new2['RawError'] = rawerror
+
+print(merged_df_new2)
+
+
+# In[67]:
+
+
+from IPython.core.pylabtools import figsize
+#Create plot of Error
+
+#Error Line
+plt.plot(merged_df_new2['Date'], merged_df_new2['Error'], color='g', label='Error')
+
+
+#Create XY Labels and Title
+plt.xlabel('Date (Year/Month/Day)') 
+plt.ylabel('Percentage') 
+plt.title("Predicted Daily COVID-19 Case Error in PA")
+#Display Plot
+plt.legend()
+
+
+# In[68]:
+
+
+#Create plot of Raw Error
+
+#Raw Error Line
+plt.plot(merged_df_new2['Date'], merged_df_new2['RawError'], color='g', label='Raw Error')
+plt.axhline(y=0.0, color='r', linestyle='-')
+
+#Create XY Labels and Title
+plt.xlabel('Date (Year/Month/Day)') 
+plt.ylabel('Percentage') 
+plt.title("Predicted Daily COVID-19 Case Raw Error in PA")
+#Display Plot
+plt.legend()
+plt.show()
+
+
+# In[69]:
+
+
+#Create plot of Accuracy
+
+#Accuracy Line
+plt.plot(merged_df_new2['Date'], merged_df_new2['Accuracy'], color='r', label='Daily Accuracy')
+
+#Create XY Labels and Title
+plt.xlabel('Date (Year/Month/Day)') 
+plt.ylabel('Percentage') 
+plt.title("Predicted Daily COVID-19 Case Accuracy in PA")
+
+#Display Plot
+plt.legend()
+plt.show()
+
+
+# In[71]:
+
+
+#Calculate Weekly Accuracy Averages
+weeklyAccuracy = 0
+averageWeeklyAccuracy = []
+length = len(accuracy)
+amountOfWeeks = int(length / 7)
+remainderDays = length % 7
+
+i = 0
+while i < length:
+  weeklyAccuracy += accuracy[i]
+  if (i + 1) % 7 == 0 and amountOfWeeks > 0:
+    averageWeeklyAccuracy.append(weeklyAccuracy / 7)
+    amountOfWeeks -= 1
+    weeklyAccuracy = 0
+  if (i + 1) % remainderDays == 0 and remainderDays > 0 and amountOfWeeks == 0:
+    averageWeeklyAccuracy.append(weeklyAccuracy / remainderDays)
+    weeklyAccuracy = 0
+  i += 1
+
+weeklyDateList = []
+i = 0
+weeklyDateList.append(merged_df_new2['Date'][i])
+while i < length:
+  if (i + 1) % 7 == 0:
+    weeklyDateList.append(merged_df_new2['Date'][i])
+  i += 1
+
+
+# In[72]:
+
+
+#Create Dataframe for Weekly Accuracy
+i = 0
+data = []
+while i < len(averageWeeklyAccuracy):
+  data.append([weeklyDateList[i], averageWeeklyAccuracy[i]])
+  i += 1
+
+df = pd.DataFrame(data, columns = ['Week Of', 'Average Weekly Accuracy'])
+
+
+# In[62]:
+
+
+merged_df_new2.to_csv('DDS_everyday_predictions.csv')
 
 
 # In[ ]:
 
 
-merged_inner.to_csv('DDS_weekly_predictions.csv')
+
 
 
 # In[ ]:
