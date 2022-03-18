@@ -20,12 +20,6 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 Ivan Voinov
 
-[![LinkedIn][linkedin-shield]][linkedin-url2]
-Jacob Adams
-
-[![LinkedIn][linkedin-shield]][linkedin-url3]
-Xutao Liu
-
 [![LinkedIn][linkedin-shield]][linkedin-url4]
 Danila Rozhevskii
 
