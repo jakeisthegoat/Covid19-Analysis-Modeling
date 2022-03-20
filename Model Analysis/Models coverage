@@ -1,0 +1,21 @@
+Standard variant only:
+DDS_NBDS
+IQVIA_ACOE_STAN
+MIT_ISOLAT_Mixtures
+UCLA_SuEIR
+
+Standard x Delta variants only:
+CEID_Walk
+HU_CSSE_DECOM
+Karlen_pypm
+MIT_Cassandra
+SDSC_ISG_TrendModel
+
+All variants only: 
+COVID19ModelAccuracy
+BPagano_RtDriven
+IEM_MED_CovidProject
+JHUAPL_Bucky
+MUNI_ARIMA
+RobertWalraven_ESG
+TTU_squider
