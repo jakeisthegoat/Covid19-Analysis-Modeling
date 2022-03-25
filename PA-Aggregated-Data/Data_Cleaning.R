@@ -106,7 +106,7 @@ vaccines2 = vaccines %>% group_by(Recip_County) %>%
             Series_Complete_18PlusPop_Pct_UR_Equity = max(Series_Complete_18PlusPop_Pct_UR_Equity),
             Series_Complete_65PlusPop_Pct_UR_Equity = max(Series_Complete_65PlusPop_Pct_UR_Equity))
 
-write.csv(transmissions2,"/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/PA_County_Vaccine.csv", row.names = FALSE)
+write.csv(vaccines2,"/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/PA_County_Vaccine.csv", row.names = FALSE)
 rm(list=ls())
 
 PA_data <- fread("/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/COVID-19_Aggregate_Cases_Current_Daily_County_Health.csv")
@@ -114,13 +114,25 @@ PA_Community_Vulnerability <- fread("/Users/jacob/Covid19-Analysis-Modeling/PA-A
 PA_transmission_data <- fread("/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/PA_transmission_rates.csv")
 PA_vaccine_data <- fread("/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/PA_County_Vaccine.csv")
 
-PA_data <- subset(PA_data, select = -c(2,4,11,12,13), na.rm = TRUE)
+PA_data <- subset(PA_data, select = -c(2,3,11,12,13), na.rm = TRUE)
 
 PA_data2 = PA_data %>% group_by(Jurisdiction) %>%
-  summarise(seven_day_avg_cases = mean(`7-day Average New Cases`),
-            Population = max(`Population (2019)`),
-            New Case Rate= mean(`New Case Rate`),
-            seven_day_avg_case_rate = mean(`7-Day Average New Case Rate`).
-            Cumulative_Case_Rate = max(`Cumulative Case Rate`),
-            FIPS = max(`County FIPS Code`)
+  summarise(seven_day_avg_cases = mean(`7-day Average New Cases`, na.rm =TRUE),
+            Population = max(`Population (2019)`, na.rm =TRUE),
+            New_Case_Rate= mean(`New Case Rate`, na.rm =TRUE),
+            seven_day_avg_case_rate = mean(`7-Day Average New Case Rate`, na.rm =TRUE),
+            Cumulative_Case_Rate = max(`Cumulative Case Rate`, na.rm =TRUE),
+            FIPS = max(`County FIPS Code`, na.rm =TRUE))
 
+PA_data2 <- PA_data2[-50,]
+PA_Community_Vulnerability <- select(PA_Community_Vulnerability, -c(COUNTY))
+PA_transmission_data <- select(PA_transmission_data, -c(county_name))
+PA_vaccine_data <- select(PA_vaccine_data, -c(Recip_County))
+
+data1 = merge(x=PA_data2, y=PA_transmission_data, by ="FIPS", all.y = TRUE)
+data2 = merge(x=data1, y=PA_Community_Vulnerability, by ="FIPS", all.y = TRUE)
+data3 = merge(x=data2, y=PA_vaccine_data, by = "FIPS", all.y = TRUE)
+
+data3 <- data3[-68,]
+
+write.csv(data3,"/Users/jacob/Covid19-Analysis-Modeling/PA-Aggregated-Data/PA_Data_Combined.csv", row.names = FALSE)
