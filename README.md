@@ -23,6 +23,9 @@ Ivan Voinov
 [![LinkedIn][linkedin-shield]][linkedin-url4]
 Danila Rozhevskii
 
+[![LinkedIn][linkedin-shield]][linkedin-url4]
+Jacob Adams
+
 
 <!-- PROJECT LOGO -->
 <br />
